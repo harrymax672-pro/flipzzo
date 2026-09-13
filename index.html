@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FlipZo — Women's Fashion, Bags &amp; Cosmetics | Wadala</title>
+<title>FlipZo — Women's Fashion, Bags &amp; Lipstick | Wadala</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -52,6 +52,22 @@
     display:flex;align-items:center;justify-content:space-between;
     padding:16px 0;
   }
+  .header-search-row{padding:0 0 14px;}
+  .search-box{
+    position:relative;display:flex;align-items:center;gap:8px;
+    background:#fff;border:1.5px solid var(--line);border-radius:30px;
+    padding:9px 16px;max-width:480px;
+  }
+  .search-box svg{width:16px;height:16px;color:rgba(59,10,26,0.45);flex-shrink:0;}
+  .search-box input{
+    border:none;outline:none;flex:1;background:transparent;
+    font-family:inherit;font-size:13.5px;color:var(--ink);
+  }
+  .search-box button{
+    background:none;border:none;font-size:14px;color:rgba(59,10,26,0.45);
+    padding:0 2px;line-height:1;
+  }
+  .search-box button:hover{color:var(--ink);}
   .brandblock{display:flex;align-items:baseline;gap:10px;}
   .brand{font-family:'Fraunces',serif;font-size:26px;font-weight:600;color:var(--ink);}
   .brand .z{color:var(--gold-deep);}
@@ -147,6 +163,14 @@
 
   /* ===== Product grid ===== */
   section.shop{padding:8px 0 90px;}
+  .category-block{margin-bottom:56px;}
+  .category-block:last-child{margin-bottom:0;}
+  .section-header{
+    display:flex;align-items:baseline;justify-content:space-between;
+    margin-bottom:20px;gap:12px;flex-wrap:wrap;
+  }
+  .section-title{font-size:26px;}
+  .section-count{font-size:13px;color:rgba(59,10,26,0.5);font-weight:600;}
   .grid{
     display:grid;grid-template-columns:repeat(4,1fr);gap:22px;
   }
@@ -237,6 +261,34 @@
     background:var(--card);border:1px solid var(--line);border-radius:10px;
     padding:10px 12px;font-weight:700;font-size:13.5px;display:flex;justify-content:space-between;
   }
+
+  /* ===== WhatsApp order product picker ===== */
+  .picker-cats{display:flex;gap:8px;flex-wrap:wrap;}
+  .picker-cat-btn{
+    padding:8px 16px;border-radius:20px;border:1.5px solid var(--line);
+    background:#fff;font-weight:700;font-size:13px;color:var(--ink);
+  }
+  .picker-cat-btn.active{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+  .picker-list{display:flex;flex-direction:column;gap:8px;margin:10px 0;min-height:56px;}
+  .picker-item{
+    display:flex;align-items:center;gap:10px;border:1.5px solid var(--line);
+    border-radius:10px;padding:8px;cursor:pointer;background:#fff;position:relative;
+  }
+  .picker-item:hover{border-color:var(--teal);}
+  .picker-item.selected{border-color:var(--teal-deep);background:rgba(31,74,68,0.06);}
+  .picker-item img{width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0;}
+  .picker-item-info{flex:1;}
+  .picker-item-name{font-weight:700;font-size:13px;}
+  .picker-item-price{font-size:12px;color:var(--gold-deep);font-weight:700;margin-top:2px;}
+  .picker-check{color:var(--teal-deep);font-weight:900;font-size:16px;}
+  .picker-empty{padding:18px 4px;text-align:center;color:rgba(59,10,26,0.5);font-size:13px;}
+  .picker-nav{display:flex;justify-content:space-between;align-items:center;margin-top:4px;gap:8px;}
+  .picker-nav-btn{
+    padding:8px 14px;border-radius:8px;font-size:12.5px;font-weight:700;border:1.5px solid var(--ink);
+    background:transparent;color:var(--ink);
+  }
+  .picker-nav-btn.primary{background:var(--ink);color:var(--cream);}
+  .picker-nav-count{font-size:12px;color:rgba(59,10,26,0.5);}
   .drawer-overlay{
     position:fixed;inset:0;background:rgba(59,10,26,0.35);z-index:60;
     display:none;
@@ -346,6 +398,13 @@
       <button class="navbtn tah-nav" onclick="openDrawer()"><span class="navlabel">Try at Home</span> <span class="badge" id="navBadge">0/10</span></button>
     </nav>
   </div>
+  <div class="wrap header-search-row">
+    <div class="search-box">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="text" id="siteSearch" placeholder="Search dresses, bags, lipstick..." oninput="handleSiteSearch()">
+      <button id="clearSearchBtn" onclick="clearSiteSearch()" hidden>✕</button>
+    </div>
+  </div>
 </header>
 
 <section class="promo-banner">
@@ -355,7 +414,7 @@
         <div class="beyebrow">Festive edit</div>
         <h2>New arrivals in sarees &amp; anarkalis</h2>
         <p>Fresh handloom and georgette pieces, added this week.</p>
-        <button class="btn btn-primary" onclick="filterCat('Clothing'); document.getElementById('shopgrid').scrollIntoView({behavior:'smooth'});">Shop clothing</button>
+        <button class="btn btn-primary" onclick="filterCat('Clothing')">Shop clothing</button>
       </div>
       <div class="banner-icon"><img src="https://images.unsplash.com/photo-1619516388835-2b60acc4049e?w=400&q=80&auto=format&fit=crop" alt="Saree"></div>
     </div>
@@ -364,14 +423,14 @@
         <div class="beyebrow">Bag edit</div>
         <h2>Everyday bags, under ₹2,000</h2>
         <p>Totes, slings and clutches built for daily carry.</p>
-        <button class="btn btn-primary" onclick="filterCat('Bags'); document.getElementById('shopgrid').scrollIntoView({behavior:'smooth'});">Shop bags</button>
+        <button class="btn btn-primary" onclick="filterCat('Bags')">Shop bags</button>
       </div>
       <div class="banner-icon"><img src="https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400&q=80&auto=format&fit=crop" alt="Handbag"></div>
     </div>
     <div class="banner-slide banner-3">
       <div class="btext">
         <div class="beyebrow">Try before you buy</div>
-        <h2>Try cosmetics at home, free</h2>
+        <h2>Try lipstick at home, free</h2>
         <p>Pick up to 10 products and try them at home before you pay.</p>
         <button class="btn btn-ghost" onclick="openDrawer()">See try-at-home bag</button>
       </div>
@@ -411,7 +470,37 @@
 
   <section class="shop">
     <div class="wrap" id="shopgrid">
-      <div class="grid" id="productGrid"></div>
+      <div id="categorySections">
+        <div class="category-block" id="section-Clothing">
+          <div class="section-header">
+            <h2 class="section-title">Clothing</h2>
+            <span class="section-count">24 products</span>
+          </div>
+          <div class="grid" id="grid-Clothing"></div>
+        </div>
+        <div class="category-block" id="section-Lipstick">
+          <div class="section-header">
+            <h2 class="section-title">Lipstick</h2>
+            <span class="section-count">4 products</span>
+          </div>
+          <div class="grid" id="grid-Lipstick"></div>
+        </div>
+        <div class="category-block" id="section-Bags">
+          <div class="section-header">
+            <h2 class="section-title">Bags</h2>
+            <span class="section-count">8 products</span>
+          </div>
+          <div class="grid" id="grid-Bags"></div>
+        </div>
+      </div>
+
+      <div class="category-block" id="searchResultsSection" hidden>
+        <div class="section-header">
+          <h2 class="section-title">Search results</h2>
+          <span class="section-count" id="searchResultsCount"></span>
+        </div>
+        <div class="grid" id="searchResultsGrid"></div>
+      </div>
     </div>
   </section>
 </main>
@@ -443,9 +532,21 @@
           <span id="lockedProductPrice"></span>
         </div>
       </div>
-      <div class="field" id="productSelectWrap" hidden>
-        <label>Product</label>
-        <select id="oProduct" onchange="refreshOrderSummary()"></select>
+      <div id="productPickerWrap" hidden>
+        <div class="field">
+          <label>Choose a category</label>
+          <div class="picker-cats" id="pickerCats"></div>
+        </div>
+        <div class="field">
+          <label>Or search by name</label>
+          <input id="pickerSearch" type="text" placeholder="Search products..." oninput="onPickerSearch()">
+        </div>
+        <div class="picker-list" id="pickerList"></div>
+        <div class="picker-nav" id="pickerNav"></div>
+        <div class="order-product-lock" id="pickerSelectedBox" hidden style="margin-top:10px;">
+          <span id="pickerSelectedName"></span>
+          <span id="pickerSelectedPrice"></span>
+        </div>
       </div>
       <div class="field">
         <label>Size</label>
@@ -564,7 +665,7 @@
         <li><a href="#" onclick="filterCat('all');return false;">All products</a></li>
         <li><a href="#" onclick="filterCat('Clothing');return false;">Clothing</a></li>
         <li><a href="#" onclick="filterCat('Bags');return false;">Bags</a></li>
-        <li><a href="#" onclick="filterCat('Cosmetics');return false;">Cosmetics</a></li>
+        <li><a href="#" onclick="filterCat('Lipstick');return false;">Lipstick</a></li>
       </ul>
     </div>
     <div>
@@ -589,26 +690,41 @@ let products = [
   {id:2, name:"Handloom Cotton Saree", category:"Clothing", price:3199, from:"#EAC7CE", to:"#C97F8D", icon:"dress", image:"https://images.unsplash.com/photo-1619516388835-2b60acc4049e?w=800&q=80&auto=format&fit=crop"},
   {id:3, name:"Georgette Kurta Set", category:"Clothing", price:1899, from:"#E3A9B3", to:"#B9727F", icon:"dress", image:"https://images.unsplash.com/photo-1616583936499-d4116e7e2e76?w=800&q=80&auto=format&fit=crop"},
   {id:4, name:"Tiered Maxi Dress", category:"Clothing", price:2299, from:"#EFC2CB", to:"#C97F8D", icon:"dress", image:"https://images.unsplash.com/photo-1610048869310-d889ff25c374?w=800&q=80&auto=format&fit=crop"},
-  {id:5, name:"Woven Cane Tote", category:"Bags", price:1499, from:"#EAD9BC", to:"#B98B3E", icon:"bag", image:"https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?w=800&q=80&auto=format&fit=crop"},
-  {id:6, name:"Structured Sling Bag", category:"Bags", price:1799, from:"#E7D2A4", to:"#93691F", icon:"bag", image:"https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&q=80&auto=format&fit=crop"},
-  {id:7, name:"Embroidered Potli Clutch", category:"Bags", price:999, from:"#EAD9BC", to:"#C9A227", icon:"bag", image:"https://images.unsplash.com/photo-1591561954557-26941169b49e?w=800&q=80&auto=format&fit=crop"},
-  {id:8, name:"Quilted Crossbody", category:"Bags", price:2099, from:"#E7D2A4", to:"#B98B3E", icon:"bag", image:"https://images.unsplash.com/photo-1614179689702-355944cd0918?w=800&q=80&auto=format&fit=crop"},
-  {id:9, name:"Matte Velvet Lipstick Set", category:"Cosmetics", price:799, from:"#3E6C66", to:"#1F4A44", icon:"cosmetic", image:"https://images.unsplash.com/photo-1625093742435-6fa192b6fb10?w=800&q=80&auto=format&fit=crop"},
-  {id:10, name:"Rose Gold Highlighter Duo", category:"Cosmetics", price:649, from:"#4C7A72", to:"#1F4A44", icon:"cosmetic", image:"https://images.unsplash.com/photo-1583209814683-c023dd293cc6?w=800&q=80&auto=format&fit=crop"},
-  {id:11, name:"Kohl &amp; Kajal Trio", category:"Cosmetics", price:499, from:"#3E6C66", to:"#163632", icon:"cosmetic", image:"https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&q=80&auto=format&fit=crop"},
-  {id:12, name:"Silk Finish Compact", category:"Cosmetics", price:899, from:"#4C7A72", to:"#1F4A44", icon:"cosmetic", image:"https://images.unsplash.com/photo-1598528738936-c50861cc75a9?w=800&q=80&auto=format&fit=crop"},
-  {id:13, name:"Chikankari Cotton Kurti", category:"Clothing", price:1699, from:"#EAC7CE", to:"#B9727F", icon:"dress", image:"https://images.unsplash.com/photo-1571908599407-cdb918ed83bf?w=800&q=80&auto=format&fit=crop"},
-  {id:14, name:"Floral Wrap Skirt", category:"Clothing", price:1399, from:"#E3A9B3", to:"#C97F8D", icon:"dress", image:"https://images.unsplash.com/photo-1571587289339-cb7da03fb5a6?w=800&q=80&auto=format&fit=crop"},
-  {id:15, name:"Velvet Blouse", category:"Clothing", price:1199, from:"#EFC2CB", to:"#B9727F", icon:"dress", image:"https://images.unsplash.com/photo-1599746146388-a7ec2004b67a?w=800&q=80&auto=format&fit=crop"},
-  {id:16, name:"Embellished Box Clutch", category:"Bags", price:1299, from:"#EAD9BC", to:"#C9A227", icon:"bag", image:"https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=800&q=80&auto=format&fit=crop"},
-  {id:17, name:"Canvas Weekender Bag", category:"Bags", price:2399, from:"#E7D2A4", to:"#93691F", icon:"bag", image:"https://images.unsplash.com/photo-1600857062241-98e5dba7f214?w=800&q=80&auto=format&fit=crop"},
-  {id:18, name:"Beaded Sling Pouch", category:"Bags", price:899, from:"#EAD9BC", to:"#B98B3E", icon:"bag", image:"https://images.unsplash.com/photo-1605733513597-a8f8341084e6?w=800&q=80&auto=format&fit=crop"},
-  {id:19, name:"Hydrating Lip Tint Set", category:"Cosmetics", price:599, from:"#3E6C66", to:"#163632", icon:"cosmetic", image:"https://images.unsplash.com/photo-1571646034647-52e6ea84b28c?w=800&q=80&auto=format&fit=crop"},
-  {id:20, name:"Compact Makeup Kit", category:"Cosmetics", price:1099, from:"#4C7A72", to:"#1F4A44", icon:"cosmetic", image:"https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=800&q=80&auto=format&fit=crop"},
+  {id:5, name:"Chikankari Cotton Kurti", category:"Clothing", price:1699, from:"#E3A9B3", to:"#C97F8D", icon:"dress", image:"https://images.unsplash.com/photo-1571908599407-cdb918ed83bf?w=800&q=80&auto=format&fit=crop"},
+  {id:6, name:"Floral Wrap Skirt", category:"Clothing", price:1399, from:"#EAC7CE", to:"#C97F8D", icon:"dress", image:"https://images.unsplash.com/photo-1571587289339-cb7da03fb5a6?w=800&q=80&auto=format&fit=crop"},
+  {id:7, name:"Velvet Blouse", category:"Clothing", price:1199, from:"#E3A9B3", to:"#B9727F", icon:"dress", image:"https://images.unsplash.com/photo-1599746146388-a7ec2004b67a?w=800&q=80&auto=format&fit=crop"},
+  {id:8, name:"Casual Cotton Co-ord Set", category:"Clothing", price:1599, from:"#EFC2CB", to:"#C97F8D", icon:"dress", image:"https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?w=800&q=80&auto=format&fit=crop"},
+  {id:9, name:"Everyday Black Jumpsuit", category:"Clothing", price:1899, from:"#E3A9B3", to:"#C97F8D", icon:"dress", image:"https://images.unsplash.com/photo-1495385794356-15371f348c31?w=800&q=80&auto=format&fit=crop"},
+  {id:10, name:"Floral Print Sundress", category:"Clothing", price:1499, from:"#EAC7CE", to:"#C97F8D", icon:"dress", image:"https://images.unsplash.com/photo-1602010069450-0a62034f235c?w=800&q=80&auto=format&fit=crop"},
+  {id:11, name:"White Sleeveless Summer Dress", category:"Clothing", price:1299, from:"#E3A9B3", to:"#B9727F", icon:"dress", image:"https://images.unsplash.com/photo-1534875756527-5e8e4392005f?w=800&q=80&auto=format&fit=crop"},
+  {id:12, name:"Blue Floral Spaghetti Dress", category:"Clothing", price:1699, from:"#EFC2CB", to:"#C97F8D", icon:"dress", image:"https://images.unsplash.com/photo-1563178406-4cdc2923acbc?w=800&q=80&auto=format&fit=crop"},
+  {id:13, name:"Classic Black Evening Dress", category:"Clothing", price:2199, from:"#E3A9B3", to:"#C97F8D", icon:"dress", image:"https://images.unsplash.com/photo-1599662875272-64de8289f6d8?w=800&q=80&auto=format&fit=crop"},
+  {id:14, name:"Boho Floral Sundress", category:"Clothing", price:1599, from:"#EAC7CE", to:"#C97F8D", icon:"dress", image:"https://images.unsplash.com/photo-1762154057377-cc9d3dd6900c?w=800&q=80&auto=format&fit=crop"},
+  {id:15, name:"Everyday Street Dress", category:"Clothing", price:1399, from:"#E3A9B3", to:"#B9727F", icon:"dress", image:"https://images.unsplash.com/photo-1478146896981-b80fe463b330?w=800&q=80&auto=format&fit=crop"},
+  {id:16, name:"Chic Black Party Dress", category:"Clothing", price:1999, from:"#EFC2CB", to:"#C97F8D", icon:"dress", image:"https://images.unsplash.com/photo-1619794724492-651397287d94?w=800&q=80&auto=format&fit=crop"},
+  {id:17, name:"Printed Kaftan Dress", category:"Clothing", price:1799, from:"#E3A9B3", to:"#C97F8D", icon:"dress", image:"https://images.unsplash.com/photo-1753192108753-81be0db2f7fe?w=800&q=80&auto=format&fit=crop"},
+  {id:18, name:"Relaxed Shirt & Pants Set", category:"Clothing", price:1499, from:"#EAC7CE", to:"#C97F8D", icon:"dress", image:"https://images.unsplash.com/photo-1614786269829-d24616faf56d?w=800&q=80&auto=format&fit=crop"},
+  {id:19, name:"Colorful Wrap Dress", category:"Clothing", price:1899, from:"#E3A9B3", to:"#B9727F", icon:"dress", image:"https://images.unsplash.com/photo-1671848633245-79cc98b0dbe8?w=800&q=80&auto=format&fit=crop"},
+  {id:20, name:"Casual Linen Dress", category:"Clothing", price:1599, from:"#EFC2CB", to:"#C97F8D", icon:"dress", image:"https://images.unsplash.com/photo-1579328064848-53fe6c665058?w=800&q=80&auto=format&fit=crop"},
+  {id:21, name:"Monochrome Floral Dress", category:"Clothing", price:1699, from:"#E3A9B3", to:"#C97F8D", icon:"dress", image:"https://images.unsplash.com/photo-1616313253719-c46514cddee1?w=800&q=80&auto=format&fit=crop"},
+  {id:22, name:"Everyday Chic Dress", category:"Clothing", price:1799, from:"#EAC7CE", to:"#C97F8D", icon:"dress", image:"https://images.unsplash.com/photo-1511130558090-00af810c21b1?w=800&q=80&auto=format&fit=crop"},
+  {id:23, name:"Embroidered Anarkali Gown", category:"Clothing", price:2699, from:"#E3A9B3", to:"#B9727F", icon:"dress", image:"https://images.unsplash.com/photo-1610202631408-fa6ba0f39ca3?w=800&q=80&auto=format&fit=crop"},
+  {id:24, name:"Layered Georgette Gown", category:"Clothing", price:2399, from:"#EFC2CB", to:"#C97F8D", icon:"dress", image:"https://images.unsplash.com/photo-1610048869310-d889ff25c374?w=800&q=80&auto=format&fit=crop"},
+  {id:25, name:"Matte Velvet Lipstick Set", category:"Lipstick", price:799, from:"#3E6C66", to:"#1F4A44", icon:"cosmetic", image:"https://images.unsplash.com/photo-1625093742435-6fa192b6fb10?w=800&q=80&auto=format&fit=crop"},
+  {id:26, name:"Hydrating Lip Tint Set", category:"Lipstick", price:599, from:"#4C7A72", to:"#1F4A44", icon:"cosmetic", image:"https://images.unsplash.com/photo-1571646034647-52e6ea84b28c?w=800&q=80&auto=format&fit=crop"},
+  {id:27, name:"Classic Red Lipstick", category:"Lipstick", price:499, from:"#3E6C66", to:"#163632", icon:"cosmetic", image:"https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=800&q=80&auto=format&fit=crop"},
+  {id:28, name:"Rose Gold Lip Gloss Duo", category:"Lipstick", price:649, from:"#4C7A72", to:"#163632", icon:"cosmetic", image:"https://images.unsplash.com/photo-1583209814683-c023dd293cc6?w=800&q=80&auto=format&fit=crop"},
+  {id:29, name:"Woven Cane Tote", category:"Bags", price:1499, from:"#EAD9BC", to:"#B98B3E", icon:"bag", image:"https://images.unsplash.com/photo-1598532163257-ae3c6b2524b6?w=800&q=80&auto=format&fit=crop"},
+  {id:30, name:"Structured Sling Bag", category:"Bags", price:1799, from:"#E7D2A4", to:"#93691F", icon:"bag", image:"https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=800&q=80&auto=format&fit=crop"},
+  {id:31, name:"Embroidered Potli Clutch", category:"Bags", price:999, from:"#EAD9BC", to:"#C9A227", icon:"bag", image:"https://images.unsplash.com/photo-1591561954557-26941169b49e?w=800&q=80&auto=format&fit=crop"},
+  {id:32, name:"Quilted Crossbody", category:"Bags", price:2099, from:"#E7D2A4", to:"#B98B3E", icon:"bag", image:"https://images.unsplash.com/photo-1614179689702-355944cd0918?w=800&q=80&auto=format&fit=crop"},
+  {id:33, name:"Embellished Box Clutch", category:"Bags", price:1299, from:"#EAD9BC", to:"#B98B3E", icon:"bag", image:"https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=800&q=80&auto=format&fit=crop"},
+  {id:34, name:"Canvas Weekender Bag", category:"Bags", price:2399, from:"#E7D2A4", to:"#93691F", icon:"bag", image:"https://images.unsplash.com/photo-1600857062241-98e5dba7f214?w=800&q=80&auto=format&fit=crop"},
+  {id:35, name:"Beaded Sling Pouch", category:"Bags", price:899, from:"#EAD9BC", to:"#C9A227", icon:"bag", image:"https://images.unsplash.com/photo-1605733513597-a8f8341084e6?w=800&q=80&auto=format&fit=crop"},
+  {id:36, name:"Everyday Leather Handbag", category:"Bags", price:1899, from:"#E7D2A4", to:"#B98B3E", icon:"bag", image:"https://images.unsplash.com/photo-1607702705816-81497b0a9009?w=800&q=80&auto=format&fit=crop"},
 ];
-let nextId = 21;
+let nextId = 37;
 let tryAtHome = new Set();
-let activeCat = "all";
 const WHATSAPP_NUMBER = "918128177882";
 const DELIVERY_CHARGE = 59;
 const TRIAL_CHARGE = 69;
@@ -619,6 +735,8 @@ const ICONS = {
   bag: '<svg viewBox="0 0 24 24" fill="none"><path d="M6 8h12l1 13H5L6 8z" stroke="#3B0A1A" stroke-width="1.4" stroke-linejoin="round"/><path d="M9 8V6a3 3 0 016 0v2" stroke="#3B0A1A" stroke-width="1.4"/></svg>',
   cosmetic: '<svg viewBox="0 0 24 24" fill="none"><path d="M10 2h4v6l-2 2-2-2V2z" stroke="#FBF6EF" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 10h6l1 12H8l1-12z" stroke="#FBF6EF" stroke-width="1.5" stroke-linejoin="round"/></svg>'
 };
+
+const CATEGORIES = ["Clothing", "Lipstick", "Bags"];
 
 /* ---------------- Helpers ---------------- */
 function fmt(n){ return "₹" + n.toLocaleString("en-IN"); }
@@ -632,37 +750,38 @@ function toast(msg){
   setTimeout(()=> el.remove(), 2600);
 }
 
-/* ---------------- Shop rendering ---------------- */
+/* ---------------- Shop rendering (section-wise) ---------------- */
 function renderCatPills(){
-  const cats = ["all","Clothing","Bags","Cosmetics"];
-  const labels = {all:"All products", Clothing:"Clothing", Bags:"Bags", Cosmetics:"Cosmetics"};
+  const cats = [
+    {key:"all", label:"All products"},
+    {key:"Clothing", label:"Clothing"},
+    {key:"Lipstick", label:"Lipstick"},
+    {key:"Bags", label:"Bags"}
+  ];
   const el = document.getElementById('catpills');
   el.innerHTML = cats.map(c =>
-    `<button class="catpill ${c===activeCat?'active':''}" onclick="filterCat('${c}')">${labels[c]}</button>`
+    `<button class="catpill" onclick="filterCat('${c.key}')">${c.label}</button>`
   ).join("");
 }
 
 function filterCat(c){
-  activeCat = c;
-  renderCatPills();
-  renderGrid();
-}
-
-function renderGrid(){
-  const grid = document.getElementById('productGrid');
-  const list = activeCat === "all" ? products : products.filter(p => p.category === activeCat);
-  if(list.length === 0){
-    grid.innerHTML = `<div class="empty-msg" style="grid-column:1/-1;">No products in this category yet. Check back soon.</div>`;
+  clearSiteSearch();
+  if(c === "all"){
+    document.getElementById('shopgrid').scrollIntoView({behavior:'smooth'});
     return;
   }
-  grid.innerHTML = list.map(p => {
-    const selected = tryAtHome.has(p.id);
-    const full = tryAtHome.size >= 10 && !selected;
-    const media = p.image
-      ? `<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-         <div class="fallback-icon">${ICONS[p.icon] || ICONS.dress}</div>`
-      : (ICONS[p.icon] || ICONS.dress);
-    return `
+  const el = document.getElementById('section-' + c);
+  if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function productCardHTML(p){
+  const selected = tryAtHome.has(p.id);
+  const full = tryAtHome.size >= 10 && !selected;
+  const media = p.image
+    ? `<img src="${p.image}" alt="${p.name}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+       <div class="fallback-icon">${ICONS[p.icon] || ICONS.dress}</div>`
+    : (ICONS[p.icon] || ICONS.dress);
+  return `
     <div class="pcard">
       <div class="pcard-media" style="background:linear-gradient(155deg, ${p.from}, ${p.to});">
         <span class="pcard-tag">${p.category}</span>
@@ -679,7 +798,52 @@ function renderGrid(){
         </div>
       </div>
     </div>`;
-  }).join("");
+}
+
+function renderCategorySection(category){
+  const container = document.getElementById('grid-' + category);
+  if(!container) return;
+  const list = products.filter(p => p.category === category);
+  container.innerHTML = list.length
+    ? list.map(productCardHTML).join("")
+    : `<div class="empty-msg" style="grid-column:1/-1;">No products in this category yet. Check back soon.</div>`;
+}
+
+function renderAllSections(){
+  CATEGORIES.forEach(renderCategorySection);
+}
+
+function refreshProductViews(){
+  renderAllSections();
+  const q = document.getElementById('siteSearch').value.trim();
+  if(q) handleSiteSearch();
+}
+
+/* ---------------- Site search ---------------- */
+function handleSiteSearch(){
+  const raw = document.getElementById('siteSearch').value.trim();
+  const q = raw.toLowerCase();
+  document.getElementById('clearSearchBtn').hidden = q.length === 0;
+
+  if(q.length === 0){
+    document.getElementById('searchResultsSection').hidden = true;
+    document.getElementById('categorySections').hidden = false;
+    return;
+  }
+
+  const matches = products.filter(p => p.name.toLowerCase().includes(q));
+  document.getElementById('categorySections').hidden = true;
+  document.getElementById('searchResultsSection').hidden = false;
+  document.getElementById('searchResultsCount').textContent = `${matches.length} found`;
+  const grid = document.getElementById('searchResultsGrid');
+  grid.innerHTML = matches.length
+    ? matches.map(productCardHTML).join("")
+    : `<div class="empty-msg" style="grid-column:1/-1;">No products match "${raw}".</div>`;
+}
+
+function clearSiteSearch(){
+  document.getElementById('siteSearch').value = "";
+  handleSiteSearch();
 }
 
 function buyNow(id){
@@ -701,7 +865,7 @@ function toggleTry(id){
     toast(`Added ${p.name} to try-at-home (${tryAtHome.size}/10)`);
   }
   updateBadges();
-  renderGrid();
+  refreshProductViews();
   renderDrawer();
 }
 
@@ -770,7 +934,7 @@ function scheduleTryAtHome(){
 
   tryAtHome.clear();
   updateBadges();
-  renderGrid();
+  refreshProductViews();
   renderDrawer();
   closeDrawer();
   toast("Trial request sent to WhatsApp");
@@ -804,26 +968,33 @@ function resetBannerTimer(){
 }
 
 /* ---------------- WhatsApp order modal ---------------- */
+const PICKER_PAGE_SIZE = 5;
+let pickerCategory = null;
+let pickerSearchQuery = "";
+let pickerOffset = 0;
+let pickerSelectedId = null;
+
 function openOrderModal(productId){
   orderProductId = productId || null;
   const lockWrap = document.getElementById('productLockWrap');
-  const selectWrap = document.getElementById('productSelectWrap');
+  const pickerWrap = document.getElementById('productPickerWrap');
 
   if(orderProductId){
     const p = products.find(x=>x.id===orderProductId);
     lockWrap.hidden = false;
-    selectWrap.hidden = true;
+    pickerWrap.hidden = true;
     document.getElementById('lockedProductName').textContent = p ? p.name : "";
     document.getElementById('lockedProductPrice').textContent = p ? fmt(p.price) : "";
   } else {
     lockWrap.hidden = true;
-    selectWrap.hidden = false;
-    const sel = document.getElementById('oProduct');
-    if(products.length === 0){
-      sel.innerHTML = `<option value="">No products available</option>`;
-    } else {
-      sel.innerHTML = products.map(p => `<option value="${p.id}">${p.name} — ${fmt(p.price)}</option>`).join("");
-    }
+    pickerWrap.hidden = false;
+    pickerCategory = null;
+    pickerSearchQuery = "";
+    pickerOffset = 0;
+    pickerSelectedId = null;
+    document.getElementById('pickerSearch').value = "";
+    document.getElementById('pickerSelectedBox').hidden = true;
+    renderPicker();
   }
 
   document.getElementById('oName').value = "";
@@ -841,13 +1012,90 @@ function closeOrderModal(){
   document.getElementById('orderOverlay').classList.remove('open');
 }
 
+function renderPicker(){
+  const el = document.getElementById('pickerCats');
+  el.innerHTML = CATEGORIES.map(c =>
+    `<button class="picker-cat-btn ${pickerCategory===c?'active':''}" onclick="selectPickerCategory('${c}')">${c}</button>`
+  ).join("");
+  renderPickerList();
+}
+
+function selectPickerCategory(c){
+  pickerCategory = c;
+  pickerSearchQuery = "";
+  pickerOffset = 0;
+  document.getElementById('pickerSearch').value = "";
+  renderPicker();
+}
+
+function onPickerSearch(){
+  pickerSearchQuery = document.getElementById('pickerSearch').value.trim().toLowerCase();
+  pickerCategory = null;
+  pickerOffset = 0;
+  renderPicker();
+}
+
+function getPickerSourceList(){
+  if(pickerSearchQuery){
+    return products.filter(p => p.name.toLowerCase().includes(pickerSearchQuery));
+  }
+  if(pickerCategory){
+    return products.filter(p => p.category === pickerCategory);
+  }
+  return [];
+}
+
+function renderPickerList(){
+  const list = getPickerSourceList();
+  const listEl = document.getElementById('pickerList');
+  const navEl = document.getElementById('pickerNav');
+
+  if(list.length === 0){
+    listEl.innerHTML = `<div class="picker-empty">Choose a category above or search by name.</div>`;
+    navEl.innerHTML = "";
+    return;
+  }
+
+  const pageItems = list.slice(pickerOffset, pickerOffset + PICKER_PAGE_SIZE);
+  listEl.innerHTML = pageItems.map(p => `
+    <div class="picker-item ${pickerSelectedId===p.id?'selected':''}" onclick="choosePickerProduct(${p.id})">
+      <img src="${p.image}" alt="${p.name}">
+      <div class="picker-item-info">
+        <div class="picker-item-name">${p.name}</div>
+        <div class="picker-item-price">${fmt(p.price)}</div>
+      </div>
+      ${pickerSelectedId===p.id ? '<span class="picker-check">✓</span>' : ''}
+    </div>
+  `).join("");
+
+  const hasPrev = pickerOffset > 0;
+  const hasMore = pickerOffset + PICKER_PAGE_SIZE < list.length;
+  navEl.innerHTML = `
+    ${hasPrev ? `<button class="picker-nav-btn" onclick="pickerPrev()">Previous</button>` : '<span></span>'}
+    <span class="picker-nav-count">${Math.min(pickerOffset+PICKER_PAGE_SIZE, list.length)} of ${list.length}</span>
+    ${hasMore ? `<button class="picker-nav-btn primary" onclick="pickerNext()">Next products</button>` : '<span></span>'}
+  `;
+}
+
+function pickerNext(){ pickerOffset += PICKER_PAGE_SIZE; renderPickerList(); }
+function pickerPrev(){ pickerOffset = Math.max(0, pickerOffset - PICKER_PAGE_SIZE); renderPickerList(); }
+
+function choosePickerProduct(id){
+  pickerSelectedId = id;
+  const p = products.find(x=>x.id===id);
+  if(!p) return;
+  document.getElementById('pickerSelectedBox').hidden = false;
+  document.getElementById('pickerSelectedName').textContent = p.name;
+  document.getElementById('pickerSelectedPrice').textContent = fmt(p.price);
+  renderPickerList();
+  refreshOrderSummary();
+}
+
 function getOrderProduct(){
   if(orderProductId){
     return products.find(x=>x.id===orderProductId);
   }
-  const sel = document.getElementById('oProduct');
-  const id = parseInt(sel.value, 10);
-  return products.find(x=>x.id===id);
+  return products.find(x=>x.id===pickerSelectedId);
 }
 
 function refreshOrderSummary(){
@@ -898,7 +1146,7 @@ function sendWhatsAppOrder(){
 
 /* ---------------- Init ---------------- */
 renderCatPills();
-renderGrid();
+renderAllSections();
 updateBadges();
 updateBanner();
 resetBannerTimer();
